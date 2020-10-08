@@ -91,7 +91,9 @@ class movieCard extends Component {
                     actions={[
                         <EditOutlined
                             onClick={() =>
-                                this.showDescription(this.props.movie.id)
+                                this.props.auth
+                                    ? this.showDescription(this.props.movie.id)
+                                    : this.props.showAuthModal()
                             }
                             className={this.getEditClass()}
                             id={`addButton${this.props.movie.id}`}
@@ -106,7 +108,12 @@ class movieCard extends Component {
                             allowClear
                             name="rating"
                             value={this.state.rating}
-                            onChange={this.onChangeRating}
+                            defaultValue={0}
+                            onChange={
+                                this.props.auth
+                                    ? this.onChangeRating
+                                    : this.props.showAuthModal
+                            }
                         />
                     </div>
                     <div
