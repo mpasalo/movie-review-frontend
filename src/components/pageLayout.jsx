@@ -91,7 +91,7 @@ class pageLayout extends Component {
                     </div>
                 </Content>
                 <Footer style={{ textAlign: "center" }}>
-                    Movie Review 101 ©2020
+                    Created By Marc Pasalo ©2020
                 </Footer>
             </Layout>
         );
