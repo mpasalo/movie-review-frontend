@@ -18,9 +18,7 @@ export const addUser = (name, email, password) => {
             password: password,
         })
         .then(function (response) {
-            Modal.success({
-                content: "Sign Up Success",
-            });
+            return response;
         });
 };
 

@@ -134,8 +134,12 @@ class pageLayout extends Component {
                     </div>
                 </Modal>
                 <SignUpModal
+                    getLoggedInUser={this.getLoggedInUser}
+                    authenticate={this.authenticate}
+                    token={this.state.token}
                     signUpModalVisiblity={this.state.signUpModalVisiblity}
                     closeSignUpModal={this.closeSignUpModal}
+                    closeLogInModal={this.closeLogInModal}
                 />
                 <LogInModal
                     getLoggedInUser={this.getLoggedInUser}

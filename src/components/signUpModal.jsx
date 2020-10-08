@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Button, Modal } from "antd";
-import { addUser } from "../UserFunctions";
+import { addUser, logIn } from "../UserFunctions";
 
 class signUpModal extends Component {
     state = {
@@ -18,8 +18,18 @@ class signUpModal extends Component {
 
     submitUserInfo = (e) => {
         e.preventDefault();
-
-        addUser(this.state.name, this.state.email, this.state.password);
+        addUser(this.state.name, this.state.email, this.state.password).then(
+            (response) => {
+                logIn(this.state.email, this.state.password).then(
+                    (response) => {
+                        const token = response.data;
+                        this.props.authenticate(token);
+                        this.props.getLoggedInUser();
+                        this.props.closeSignUpModal();
+                    }
+                );
+            }
+        );
     };
 
     render() {
