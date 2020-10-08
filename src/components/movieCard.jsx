@@ -25,7 +25,10 @@ class movieCard extends Component {
     };
 
     componentDidMount() {
-        this.getMovieReview();
+        const lsToken = localStorage.getItem("token");
+        if (lsToken) {
+            this.getMovieReview();
+        }
     }
 
     onChange = (e) => {
@@ -36,11 +39,13 @@ class movieCard extends Component {
 
     submitReviewDescription = (e) => {
         e.preventDefault();
-        addReviewDescription(this.props.movie, this.state.description).then(
-            () => {
-                this.getMovieReview();
-            }
-        );
+        addReviewDescription(
+            this.props.movie,
+            this.state.description,
+            this.props.userId
+        ).then(() => {
+            this.getMovieReview();
+        });
     };
 
     getMovieReview = () => {

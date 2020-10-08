@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Modal } from "antd";
+import api from "./api";
 
 export const getMovies = () => {
     return axios
@@ -11,12 +12,12 @@ export const getMovies = () => {
         });
 };
 
-export const addReviewDescription = (movie, description) => {
-    return axios
-        .post(
-            process.env.REACT_APP_URL + `/api/reviews/${movie.id}/description`,
-            { description: description }
-        )
+export const addReviewDescription = (movie, description, userId) => {
+    return api()
+        .post(`/reviews/${movie.id}/description`, {
+            description: description,
+            userId: userId,
+        })
         .then(function (response) {
             Modal.success({
                 content:
@@ -26,8 +27,8 @@ export const addReviewDescription = (movie, description) => {
 };
 
 export const getReview = (movieId) => {
-    return axios
-        .get(process.env.REACT_APP_URL + `/api/reviews/${movieId}`, {
+    return api()
+        .get(`/reviews/${movieId}`, {
             headers: { "Content-Type": "application/json" },
         })
         .then((result) => {
@@ -46,8 +47,8 @@ export const deleteReview = (movie) => {
 };
 
 export const addReviewRating = (movie, rating) => {
-    return axios
-        .post(process.env.REACT_APP_URL + `/api/reviews/${movie.id}/rating`, {
+    return api()
+        .post(`/reviews/${movie.id}/rating`, {
             rating: rating,
         })
         .then(function (response) {

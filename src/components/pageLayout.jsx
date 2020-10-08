@@ -12,7 +12,7 @@ const { Header, Content, Footer } = Layout;
 
 class pageLayout extends Component {
     state = {
-        userName: "",
+        user: {},
         movies: [],
         sorted: false,
         isAuthenticated: false,
@@ -42,7 +42,7 @@ class pageLayout extends Component {
     getLoggedInUser = () => {
         getUser().then((response) => {
             this.setState({
-                userName: response.name,
+                user: response,
             });
         });
     };
@@ -109,8 +109,7 @@ class pageLayout extends Component {
                         <Menu.Item key="1">Home</Menu.Item>
                     </Menu>
                 </Header>
-
-                <p>Hello {<b>{this.state.userName}</b>} !</p>
+                <p>Hello {<b>{this.state.user.name}</b>} !</p>
 
                 <Modal
                     title="Join Us"
@@ -178,6 +177,7 @@ class pageLayout extends Component {
                                 movie={movie}
                                 auth={this.state.isAuthenticated}
                                 showAuthModal={this.showAuthModal}
+                                userId={this.state.user.id}
                             />
                         ))}
                     </div>

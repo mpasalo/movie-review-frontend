@@ -26,6 +26,7 @@ class logInModal extends Component {
             this.props.authenticate(token);
             this.props.closeLogInModal();
             this.props.getLoggedInUser();
+            window.location.reload();
         });
     };
 
