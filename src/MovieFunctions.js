@@ -59,8 +59,8 @@ export const addReviewRating = (movie, rating) => {
 };
 
 export const filterByReview = () => {
-    return axios
-        .get(process.env.REACT_APP_URL + "/api/movies/filter/review", {
+    return api()
+        .get("/movies/filter/review", {
             headers: { "Content-Type": "application/json" },
         })
         .then((result) => {

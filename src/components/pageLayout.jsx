@@ -1,12 +1,23 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import "../index.css";
-import { Layout, Menu, Button, Modal } from "antd";
+import { Layout, Menu, Button, Modal, Dropdown } from "antd";
 import MovieCard from "./movieCard";
 import { filterByReview, getMovies } from "../MovieFunctions";
 import { getUser, logOut } from "../UserFunctions";
 import SignUpModal from "./signUpModal";
 import LogInModal from "./logInModal";
+import {
+    LogoutOutlined,
+    UserOutlined,
+    LoginOutlined,
+    UserAddOutlined,
+    SortAscendingOutlined,
+    SortDescendingOutlined,
+    FilterOutlined,
+    DownOutlined,
+    UndoOutlined,
+} from "@ant-design/icons";
 
 const { Header, Content, Footer } = Layout;
 
@@ -15,6 +26,7 @@ class pageLayout extends Component {
         user: {},
         movies: [],
         sorted: false,
+        filtered: false,
         isAuthenticated: false,
         token: null,
         authModalVisibility: false,
@@ -35,6 +47,7 @@ class pageLayout extends Component {
         getMovies().then((data) => {
             this.setState({
                 movies: [...data],
+                filtered: false,
             });
         });
     };
@@ -61,6 +74,7 @@ class pageLayout extends Component {
         filterByReview().then((data) => {
             this.setState({
                 movies: [...data],
+                filtered: true,
             });
         });
     };
@@ -97,6 +111,14 @@ class pageLayout extends Component {
     }
 
     render() {
+        const menu = (
+            <Menu>
+                <Menu.Item key="1" onClick={() => this.filterMoviesByReview()}>
+                    With Reviews
+                </Menu.Item>
+            </Menu>
+        );
+
         return (
             <Layout className="layout">
                 <Header>
@@ -104,13 +126,48 @@ class pageLayout extends Component {
                     <Menu
                         theme="dark"
                         mode="horizontal"
-                        defaultSelectedKeys={["2"]}
+                        defaultSelectedKeys={["1"]}
                     >
                         <Menu.Item key="1">Home</Menu.Item>
+                        {this.state.isAuthenticated ? (
+                            <Menu.Item
+                                className="float-right"
+                                icon={<LogoutOutlined />}
+                                onClick={() => this.logOutUser()}
+                                key="2"
+                            >
+                                Logout
+                            </Menu.Item>
+                        ) : (
+                            <Menu.Item
+                                className="float-right"
+                                icon={<LoginOutlined />}
+                                onClick={() => this.showLogInModal()}
+                                key="3"
+                            >
+                                Login
+                            </Menu.Item>
+                        )}
+                        {this.state.isAuthenticated ? (
+                            <Menu.Item
+                                className="float-right"
+                                icon={<UserOutlined />}
+                                key="4"
+                            >
+                                {this.state.user.name}
+                            </Menu.Item>
+                        ) : (
+                            <Menu.Item
+                                className="float-right"
+                                icon={<UserAddOutlined />}
+                                onClick={() => this.showSignUpModal()}
+                                key="5"
+                            >
+                                Sign Up
+                            </Menu.Item>
+                        )}
                     </Menu>
                 </Header>
-                <p>Hello {<b>{this.state.user.name}</b>} !</p>
-
                 <Modal
                     title="Join Us"
                     visible={this.state.authModalVisibility}
@@ -149,27 +206,39 @@ class pageLayout extends Component {
                 />
                 <Content style={{ padding: "0 50px" }}>
                     {this.state.isAuthenticated ? (
-                        <Button
-                            className="m-2 btn-primary"
-                            onClick={() => this.logOutUser()}
-                        >
-                            Logout
-                        </Button>
-                    ) : null}
-                    {this.state.isAuthenticated ? (
-                        <Button
-                            className="m-2 btn-primary"
-                            onClick={() => this.filterMoviesByReview()}
-                        >
-                            Filter By Review
-                        </Button>
+                        this.state.filtered ? (
+                            <Button
+                                type={"danger"}
+                                size={"large"}
+                                className="m-2"
+                                icon={<UndoOutlined />}
+                                onClick={() => this.getAllMovies()}
+                            ></Button>
+                        ) : (
+                            <Dropdown overlay={menu}>
+                                <Button
+                                    type={"primary"}
+                                    size={"large"}
+                                    icon={<FilterOutlined />}
+                                >
+                                    <DownOutlined />
+                                </Button>
+                            </Dropdown>
+                        )
                     ) : null}
                     <Button
-                        className="m-2 btn-primary"
+                        type={"primary"}
+                        size={"large"}
+                        className="m-2"
+                        icon={
+                            this.state.sorted ? (
+                                <SortAscendingOutlined />
+                            ) : (
+                                <SortDescendingOutlined />
+                            )
+                        }
                         onClick={() => this.sortBy("title")}
-                    >
-                        Sort By Title Alphabetically
-                    </Button>
+                    ></Button>
                     <div className="site-layout-content row text-center">
                         {this.state.movies.map((movie) => (
                             <MovieCard
