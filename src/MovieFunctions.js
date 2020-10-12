@@ -37,8 +37,8 @@ export const getReview = (movieId) => {
 };
 
 export const deleteReview = (movie) => {
-    return axios
-        .delete(process.env.REACT_APP_URL + `/api/reviews/${movie.id}`)
+    return api()
+        .delete(`/reviews/${movie.id}`)
         .then(function (response) {
             Modal.success({
                 content: "Review has been deleted for " + movie.title,
