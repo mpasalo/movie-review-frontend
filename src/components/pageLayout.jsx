@@ -121,7 +121,7 @@ class pageLayout extends Component {
 
         return (
             <Layout className="layout">
-                <Header>
+                <Header className="fixed-top">
                     <div className="logo" />
                     <Menu
                         theme="dark"
@@ -168,92 +168,94 @@ class pageLayout extends Component {
                         )}
                     </Menu>
                 </Header>
-                <Modal
-                    title="Join Us"
-                    visible={this.state.authModalVisibility}
-                    footer={null}
-                    onCancel={this.closeAuthModal}
-                >
-                    <div className="text-center">
-                        <Button
-                            onClick={this.showSignUpModal}
-                            className="btn-primary m-2"
-                        >
-                            Sign Up
-                        </Button>
-                        <Button
-                            onClick={this.showLogInModal}
-                            className="btn-success m-2"
-                        >
-                            Log In
-                        </Button>
-                    </div>
-                </Modal>
-                <SignUpModal
-                    getLoggedInUser={this.getLoggedInUser}
-                    authenticate={this.authenticate}
-                    token={this.state.token}
-                    signUpModalVisiblity={this.state.signUpModalVisiblity}
-                    closeSignUpModal={this.closeSignUpModal}
-                    closeLogInModal={this.closeLogInModal}
-                />
-                <LogInModal
-                    getLoggedInUser={this.getLoggedInUser}
-                    authenticate={this.authenticate}
-                    token={this.state.token}
-                    logInModalVisiblity={this.state.logInModalVisiblity}
-                    closeLogInModal={this.closeLogInModal}
-                />
-                <Content style={{ padding: "0 50px" }}>
-                    {this.state.isAuthenticated ? (
-                        this.state.filtered ? (
+                    <Modal
+                        title="Join Us"
+                        visible={this.state.authModalVisibility}
+                        footer={null}
+                        onCancel={this.closeAuthModal}
+                    >
+                        <div className="text-center">
                             <Button
-                                type={"danger"}
-                                size={"large"}
-                                className="m-2"
-                                icon={<UndoOutlined />}
-                                onClick={() => this.getAllMovies()}
-                            ></Button>
-                        ) : (
-                            <Dropdown overlay={menu}>
+                                onClick={this.showSignUpModal}
+                                className="btn-primary m-2"
+                            >
+                                Sign Up
+                            </Button>
+                            <Button
+                                onClick={this.showLogInModal}
+                                className="btn-success m-2"
+                            >
+                                Log In
+                            </Button>
+                        </div>
+                    </Modal>
+                    <SignUpModal
+                        getLoggedInUser={this.getLoggedInUser}
+                        authenticate={this.authenticate}
+                        token={this.state.token}
+                        signUpModalVisiblity={this.state.signUpModalVisiblity}
+                        closeSignUpModal={this.closeSignUpModal}
+                        closeLogInModal={this.closeLogInModal}
+                    />
+                    <LogInModal
+                        getLoggedInUser={this.getLoggedInUser}
+                        authenticate={this.authenticate}
+                        token={this.state.token}
+                        logInModalVisiblity={this.state.logInModalVisiblity}
+                        closeLogInModal={this.closeLogInModal}
+                    />
+                    <div className="container"> 
+                    <Content style={{ padding: "0 50px", marginTop: 70 }}>
+                        {this.state.isAuthenticated ? (
+                            this.state.filtered ? (
                                 <Button
-                                    type={"primary"}
+                                    type={"danger"}
                                     size={"large"}
-                                    icon={<FilterOutlined />}
-                                >
-                                    <DownOutlined />
-                                </Button>
-                            </Dropdown>
-                        )
-                    ) : null}
-                    <Button
-                        type={"primary"}
-                        size={"large"}
-                        className="m-2"
-                        icon={
-                            this.state.sorted ? (
-                                <SortAscendingOutlined />
+                                    className="m-2"
+                                    icon={<UndoOutlined />}
+                                    onClick={() => this.getAllMovies()}
+                                ></Button>
                             ) : (
-                                <SortDescendingOutlined />
+                                <Dropdown overlay={menu}>
+                                    <Button
+                                        type={"primary"}
+                                        size={"large"}
+                                        icon={<FilterOutlined />}
+                                    >
+                                        <DownOutlined />
+                                    </Button>
+                                </Dropdown>
                             )
-                        }
-                        onClick={() => this.sortBy("title")}
-                    ></Button>
-                    <div className="site-layout-content row text-center">
-                        {this.state.movies.map((movie) => (
-                            <MovieCard
-                                key={movie.id}
-                                movie={movie}
-                                auth={this.state.isAuthenticated}
-                                showAuthModal={this.showAuthModal}
-                                userId={this.state.user.id}
-                            />
-                        ))}
-                    </div>
-                </Content>
-                <Footer style={{ textAlign: "center" }}>
-                    Created By Marc Pasalo ©2020
-                </Footer>
+                        ) : null}
+                        <Button
+                            type={"primary"}
+                            size={"large"}
+                            className="m-2"
+                            icon={
+                                this.state.sorted ? (
+                                    <SortAscendingOutlined />
+                                ) : (
+                                    <SortDescendingOutlined />
+                                )
+                            }
+                            onClick={() => this.sortBy("title")}
+                        ></Button>
+                        <div className="site-layout-content row text-center">
+                            {this.state.movies.map((movie) => (
+                                <MovieCard
+                                    key={movie.id}
+                                    movie={movie}
+                                    auth={this.state.isAuthenticated}
+                                    showAuthModal={this.showAuthModal}
+                                    userId={this.state.user.id}
+                                />
+                            ))}
+                        </div>
+                    </Content>
+                    <Footer style={{ textAlign: "center" }}>
+                        Created By Marc Pasalo ©2020
+                    </Footer>
+                </div>
             </Layout>
         );
     }
