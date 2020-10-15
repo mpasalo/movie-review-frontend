@@ -20,14 +20,33 @@ class signUpModal extends Component {
         e.preventDefault();
         addUser(this.state.name, this.state.email, this.state.password).then(
             (response) => {
-                logIn(this.state.email, this.state.password).then(
-                    (response) => {
-                        const token = response.data;
-                        this.props.authenticate(token);
-                        this.props.getLoggedInUser();
-                        this.props.closeSignUpModal();
-                    }
-                );
+                if (response.data.message) {
+                    var arr = [].concat.apply([], [
+                        response.data.message.name,
+                        response.data.message.email,
+                        response.data.message.password,
+                    ]);
+                    let error_messages = arr.filter(function (e) {
+                        if (e) {
+                            return e ;
+                        } else {
+                            return null;
+                        }
+                    });
+
+                    Modal.error({
+                        content: error_messages
+                    });
+                } else {
+                    logIn(this.state.email, this.state.password).then(
+                        (response) => {
+                            const token = response.data;
+                            this.props.authenticate(token);
+                            this.props.getLoggedInUser();
+                            this.props.closeSignUpModal();
+                        }
+                    );
+                }
             }
         );
     };
