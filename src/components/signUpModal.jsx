@@ -26,7 +26,7 @@ class signUpModal extends Component {
                         response.data.message.email,
                         response.data.message.password,
                     ]);
-                    let error_messages = arr.filter(function (e) {
+                    let error_fields = arr.filter(function (e) {
                         if (e) {
                             return e ;
                         } else {
@@ -35,7 +35,7 @@ class signUpModal extends Component {
                     });
 
                     Modal.error({
-                        content: error_messages
+                        content: error_fields
                     });
                 } else {
                     logIn(this.state.email, this.state.password).then(
