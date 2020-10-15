@@ -22,14 +22,25 @@ class logInModal extends Component {
 
     logInUser = () => {
         logIn(this.state.email, this.state.password).then((response) => {
-
-            if (response.data.message === "The provided credentials are incorrect.") {     
-                Modal.error({
-                    content: "Incorrect Email or Password"
+            if (typeof response.data.message !== 'undefined' && (response.data.message.email || response.data.message.password)) {
+                var arr = [].concat.apply([], [
+                    response.data.message.email,
+                    response.data.message.password,
+                ]);
+                let error_fields = arr.filter(function (e) {
+                    if (e) {
+                        return e ;
+                    } else {
+                        return null;
+                    }
                 });
-            } else if (response.data.message === "The given data was invalid.") {
+
                 Modal.error({
-                    content: "Please fill out both fields",
+                    content: error_fields
+                });
+            } else if (response.data.message) {
+                Modal.error({
+                    content: response.data.message
                 });
             } else {
                 const token = response.data;
