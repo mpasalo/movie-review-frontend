@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import "../index.css";
-import { Layout, Menu, Button, Modal, Dropdown } from "antd";
+import { Layout, Menu, Button, Modal, Dropdown, Spin } from "antd";
 import MovieCard from "./movieCard";
 import { filterByReview, getMovies } from "../MovieFunctions";
 import { getUser, logOut } from "../UserFunctions";
@@ -23,6 +23,7 @@ const { Header, Content, Footer } = Layout;
 
 class pageLayout extends Component {
     state = {
+        loading: true,
         user: {},
         movies: [],
         sorted: false,
@@ -48,6 +49,7 @@ class pageLayout extends Component {
             this.setState({
                 movies: [...data],
                 filtered: false,
+                loading: false,
             });
         });
     };
@@ -168,43 +170,43 @@ class pageLayout extends Component {
                         )}
                     </Menu>
                 </Header>
-                    <Modal
-                        title="Join Us"
-                        visible={this.state.authModalVisibility}
-                        footer={null}
-                        onCancel={this.closeAuthModal}
-                    >
-                        <div className="text-center">
-                            <Button
-                                onClick={this.showSignUpModal}
-                                className="btn-primary m-2"
-                            >
-                                Sign Up
-                            </Button>
-                            <Button
-                                onClick={this.showLogInModal}
-                                className="btn-success m-2"
-                            >
-                                Log In
-                            </Button>
-                        </div>
-                    </Modal>
-                    <SignUpModal
-                        getLoggedInUser={this.getLoggedInUser}
-                        authenticate={this.authenticate}
-                        token={this.state.token}
-                        signUpModalVisiblity={this.state.signUpModalVisiblity}
-                        closeSignUpModal={this.closeSignUpModal}
-                        closeLogInModal={this.closeLogInModal}
-                    />
-                    <LogInModal
-                        getLoggedInUser={this.getLoggedInUser}
-                        authenticate={this.authenticate}
-                        token={this.state.token}
-                        logInModalVisiblity={this.state.logInModalVisiblity}
-                        closeLogInModal={this.closeLogInModal}
-                    />
-                    <div className="container"> 
+                <Modal
+                    title="Join Us"
+                    visible={this.state.authModalVisibility}
+                    footer={null}
+                    onCancel={this.closeAuthModal}
+                >
+                    <div className="text-center">
+                        <Button
+                            onClick={this.showSignUpModal}
+                            className="btn-primary m-2"
+                        >
+                            Sign Up
+                        </Button>
+                        <Button
+                            onClick={this.showLogInModal}
+                            className="btn-success m-2"
+                        >
+                            Log In
+                        </Button>
+                    </div>
+                </Modal>
+                <SignUpModal
+                    getLoggedInUser={this.getLoggedInUser}
+                    authenticate={this.authenticate}
+                    token={this.state.token}
+                    signUpModalVisiblity={this.state.signUpModalVisiblity}
+                    closeSignUpModal={this.closeSignUpModal}
+                    closeLogInModal={this.closeLogInModal}
+                />
+                <LogInModal
+                    getLoggedInUser={this.getLoggedInUser}
+                    authenticate={this.authenticate}
+                    token={this.state.token}
+                    logInModalVisiblity={this.state.logInModalVisiblity}
+                    closeLogInModal={this.closeLogInModal}
+                />
+                <div className="container">
                     <Content style={{ padding: "0 50px", marginTop: 70 }}>
                         {this.state.isAuthenticated ? (
                             this.state.filtered ? (
@@ -240,17 +242,19 @@ class pageLayout extends Component {
                             }
                             onClick={() => this.sortBy("title")}
                         ></Button>
-                        <div className="site-layout-content row text-center">
-                            {this.state.movies.map((movie) => (
-                                <MovieCard
-                                    key={movie.id}
-                                    movie={movie}
-                                    auth={this.state.isAuthenticated}
-                                    showAuthModal={this.showAuthModal}
-                                    userId={this.state.user.id}
-                                />
-                            ))}
-                        </div>
+                        <Spin spinning={this.state.loading}>
+                            <div className="site-layout-content row text-center">
+                                {this.state.movies.map((movie) => (
+                                    <MovieCard
+                                        key={movie.id}
+                                        movie={movie}
+                                        auth={this.state.isAuthenticated}
+                                        showAuthModal={this.showAuthModal}
+                                        userId={this.state.user.id}
+                                    />
+                                ))}
+                            </div>
+                        </Spin>{" "}
                     </Content>
                     <Footer style={{ textAlign: "center" }}>
                         Created By Marc Pasalo ©2020
