@@ -17,6 +17,7 @@ import {
     FilterOutlined,
     DownOutlined,
     UndoOutlined,
+    LoadingOutlined,
 } from "@ant-design/icons";
 
 const { Header, Content, Footer } = Layout;
@@ -242,7 +243,15 @@ class pageLayout extends Component {
                             }
                             onClick={() => this.sortBy("title")}
                         ></Button>
-                        <Spin spinning={this.state.loading}>
+                        <Spin
+                            indicator={
+                                <LoadingOutlined
+                                    style={{ fontSize: 24 }}
+                                    spin
+                                />
+                            }
+                            spinning={this.state.loading}
+                        >
                             <div className="site-layout-content row text-center">
                                 {this.state.movies.map((movie) => (
                                     <MovieCard
