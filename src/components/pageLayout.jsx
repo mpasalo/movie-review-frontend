@@ -74,11 +74,15 @@ class pageLayout extends Component {
     };
 
     filterMoviesByReview = () => {
-        filterByReview().then((data) => {
-            this.setState({
-                movies: [...data],
-                filtered: true,
-            });
+        let filteredMovies = this.state.movies.filter(
+            (movie) =>
+                movie.review &&
+                (movie.review.rating !== 0 || movie.review.description !== null)
+        );
+
+        this.setState({
+            movies: [...filteredMovies],
+            filtered: true,
         });
     };
 
