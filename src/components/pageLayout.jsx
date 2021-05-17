@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import "../index.css";
 import { Layout, Menu, Button, Modal, Dropdown, Spin } from "antd";
 import MovieCard from "./movieCard";
-import { filterByReview, getMovies } from "../MovieFunctions";
+import { getMovies } from "../MovieFunctions";
 import { getUser, logOut } from "../UserFunctions";
 import SignUpModal from "./signUpModal";
 import LogInModal from "./logInModal";
