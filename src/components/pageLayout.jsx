@@ -270,7 +270,7 @@ class pageLayout extends Component {
                         </Spin>{" "}
                     </Content>
                     <Footer style={{ textAlign: "center" }}>
-                        Created By Marc Pasalo ©2020
+                        Created By Marc Pasalo © {this.getYear()}
                     </Footer>
                 </div>
             </Layout>
@@ -313,6 +313,10 @@ class pageLayout extends Component {
         this.setState({
             logInModalVisiblity: false,
         });
+    };
+
+    getYear = () => {
+        return new Date().getFullYear();
     };
 }
 
