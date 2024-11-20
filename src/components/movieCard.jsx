@@ -11,6 +11,7 @@ import {
 import {
     addReviewDescription,
     getReview,
+    getAverageRating,
     deleteReview,
     addReviewRating,
 } from "../MovieFunctions";
@@ -20,15 +21,13 @@ const { TextArea } = Input;
 class movieCard extends Component {
     state = {
         rating: "",
+        averageRating: "",
         description: "",
         hasDescription: false,
     };
 
     componentDidMount() {
-        const lsToken = localStorage.getItem("token");
-        if (lsToken) {
-            this.getMovieReview();
-        }
+        this.getMovieReview();
     }
 
     onChange = (e) => {
@@ -49,13 +48,21 @@ class movieCard extends Component {
     };
 
     getMovieReview = () => {
-        getReview(this.props.movie.id).then((data) => {
-            this.setState({
-                rating: data.rating,
-                description: data.description,
-                hasDescription: data.description ? true : false,
+        if (this.props.auth) {
+            getReview(this.props.movie.id).then((data) => {
+                this.setState({
+                    rating: data.rating,
+                    description: data.description,
+                    hasDescription: data.description ? true : false,
+                });
             });
-        });
+        } else {
+            getAverageRating(this.props.movie.id).then((data) => {
+                this.setState({
+                    averageRating: data
+                });
+            });
+        }
     };
 
     removeReviewDescription = () => {
@@ -101,7 +108,7 @@ class movieCard extends Component {
                                     ? this.showDescription(this.props.movie.id)
                                     : this.props.showAuthModal()
                             }
-                            className={this.getEditClass()}
+                            className={this.props.auth ? this.getEditClass() : "d-none"}
                             id={`addButton${this.props.movie.id}`}
                         />,
                     ]}
@@ -109,11 +116,16 @@ class movieCard extends Component {
                     <p>
                         <b>{this.props.movie.title}</b>
                     </p>
+                    {this.props.auth ? '' :
+                        <p>
+                            Average Ratings:
+                        </p>
+                    }
                     <div className="text-center">
                         <Rate
                             allowClear
                             name="rating"
-                            value={this.state.rating}
+                            value={this.props.auth  ? this.state.rating : this.state.averageRating}
                             defaultValue={0}
                             onChange={
                                 this.props.auth

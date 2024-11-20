@@ -36,6 +36,16 @@ export const getReview = (movieId) => {
         });
 };
 
+export const getAverageRating = (movieId) => {
+    return api()
+        .get(`/reviews/${movieId}/average-rating`, {
+            headers: { "Content-Type": "application/json" },
+        })
+        .then((result) => {
+            return result.data;
+        });
+};
+
 export const deleteReview = (movie) => {
     return api()
         .delete(`/reviews/${movie.id}`)
