@@ -127,9 +127,29 @@ class pageLayout extends Component {
         );
 
         return (
-            <Layout className="layout">
+            <Layout className="layout" 
+                style={{
+                    backgroundImage: "url('/curtain.jpg')",
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat'
+                }}
+            >
                 <Header className="fixed-top">
-                    <div className="logo" />
+                    <div className="logo" style={{
+                            backgroundColor:"#001529",
+                            height: "30px",
+                            maxWidth: "120px"
+                        }} >
+                    <img
+                        style={{
+                            marginTop: "-40px",
+                            maxHeight: "80px",
+                            maxWidth: "120px"
+                        }} 
+                        src='/reel.jpg' alt="Reel" 
+                    />
+                    </div>
                     <Menu
                         theme="dark"
                         mode="horizontal"
@@ -269,7 +289,11 @@ class pageLayout extends Component {
                             </div>
                         </Spin>{" "}
                     </Content>
-                    <Footer style={{ textAlign: "center" }}>
+                    <Footer style={{ 
+                        textAlign: "center",
+                        marginLeft: "35px", 
+                        maxWidth: "1040px"
+                        }}>
                         Created By Marc Pasalo © {this.getYear()}
                     </Footer>
                 </div>
