@@ -132,7 +132,8 @@ class pageLayout extends Component {
                     backgroundImage: "url('/curtain.jpg')",
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat'
+                    backgroundRepeat: 'no-repeat',
+                    minHeight: "100vh"
                 }}
             >
                 <Header className="fixed-top">
@@ -144,7 +145,7 @@ class pageLayout extends Component {
                     <img
                         style={{
                             marginTop: "-40px",
-                            maxHeight: "80px",
+                            maxHeight: "70px",
                             maxWidth: "120px"
                         }} 
                         src='/reel.jpg' alt="Reel" 
