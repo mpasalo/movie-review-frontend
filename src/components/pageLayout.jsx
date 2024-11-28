@@ -156,7 +156,7 @@ class pageLayout extends Component {
                         mode="horizontal"
                         defaultSelectedKeys={["1"]}
                     >
-                        <Menu.Item key="1">Home</Menu.Item>
+                        {/* <Menu.Item key="1">Home</Menu.Item> */}
                         {this.state.isAuthenticated ? (
                             <Menu.Item
                                 className="float-right"

@@ -29,3 +29,9 @@ code {
 [data-theme="dark"] .logo {
     background: rgba(255, 255, 255, 0.3);
 }
+
+@media screen and (max-width: 768px) {
+    .logo {
+        display: none !important;
+    }
+  }
