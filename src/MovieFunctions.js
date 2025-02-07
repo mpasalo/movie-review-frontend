@@ -67,13 +67,3 @@ export const addReviewRating = (movie, rating) => {
             });
         });
 };
-
-export const filterByReview = () => {
-    return api()
-        .get("/movies/filter/review", {
-            headers: { "Content-Type": "application/json" },
-        })
-        .then((result) => {
-            return result.data;
-        });
-};
