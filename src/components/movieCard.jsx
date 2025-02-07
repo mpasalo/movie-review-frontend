@@ -7,6 +7,8 @@ import {
     SaveOutlined,
     CloseCircleOutlined,
     DeleteOutlined,
+    SearchOutlined,
+    CommentOutlined
 } from "@ant-design/icons";
 import {
     addReviewDescription,
@@ -15,6 +17,8 @@ import {
     deleteReview,
     addReviewRating,
 } from "../MovieFunctions";
+import MovieDetailsModal from "./movieDetailsModal";
+import ReviewsModal from "./reviewsModal";
 
 const { TextArea } = Input;
 
@@ -22,8 +26,11 @@ class movieCard extends Component {
     state = {
         rating: "",
         averageRating: "",
+        reviews:[],
         description: "",
         hasDescription: false,
+        movieDetailsModalVisiblity: false,
+        reviewsModalVisiblity: false,
     };
 
     componentDidMount() {
@@ -87,19 +94,88 @@ class movieCard extends Component {
             (<Button type="primary">Open Modal</Button>),
             (
                 <Card
+                    hoverable
+                    className="card-container"
                     style={{
+                        position: 'relative',
                         width: 300,
                         boxShadow: "5px 8px 24px 5px rgba(208, 216, 243, 0.6)",
                         margin: 10,
                         marginBottom: 25,
                     }}
                     cover={
-                        <img
-                            alt="example"
-                            src={this.props.movie.image}
-                            width={500}
-                            height={400}
-                        />
+                        <div style={{ position: 'relative', overflow: 'hidden'}}>
+                            <img
+                                className="custom-card"
+                                alt="example"
+                                src={this.props.movie.image}
+                            />
+                            <div
+                                style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'rgba(68, 23, 82, 0.5)',
+                                opacity: 0, 
+                                transition: 'opacity 0.3s ease', 
+                                zIndex: 50,
+                                }}
+                                className="blue-overlay"
+                            /> 
+                            <Button
+                                onClick={this.toggleMovieDetailsModal}
+                                style={{
+                                    backgroundColor: '#000000',
+                                    color: '#ffffff',
+                                    borderRadius: '10px',  
+                                    position: 'absolute',
+                                    top: '30%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    zIndex: 50,
+                                    opacity: 0,
+                                    transition: 'opacity 0.3s ease',
+                                    paddingLeft: '30px'
+                                }}
+                                className="hover-button"
+                                ><SearchOutlined 
+                                    style={{
+                                        position: 'absolute',
+                                        top: '25%',
+                                        left: '15%',
+                                    }}
+                                />
+                                    Movie Details
+                            </Button>
+
+                            <Button
+                                onClick={this.toggleReviewsModal}
+                                style={{
+                                    backgroundColor: '#000000',
+                                    color: '#ffffff',
+                                    borderRadius: '10px',  
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    zIndex: 50,
+                                    opacity: 0,
+                                    transition: 'opacity 0.3s ease',
+                                    paddingLeft: '30px'
+                                }}
+                                className="hover-button"
+                                ><CommentOutlined 
+                                    style={{
+                                        position: 'absolute',
+                                        top: '25%',
+                                        left: '15%',
+                                    }}
+                                />
+                                    User Reviews
+                            </Button>
+                        </div>
                     }
                     actions={[
                         <EditOutlined
@@ -114,11 +190,11 @@ class movieCard extends Component {
                     ]}
                 >
                     <p>
-                        <b>{this.props.movie.title}</b>
+                        <b>{this.props.movie.title} ({this.props.movie.year})</b>
                     </p>
                     {this.props.auth ? '' :
                         <p>
-                            Average Ratings:
+                            Average User Ratings:
                         </p>
                     }
                     <div className="text-center">
@@ -193,6 +269,17 @@ class movieCard extends Component {
                             </div>
                         </div>
                     </div>
+                    <MovieDetailsModal
+                        movieDetailsModalVisiblity={this.state.movieDetailsModalVisiblity}
+                        movie={this.props.movie}
+                        toggleMovieDetailsModal={this.toggleMovieDetailsModal}
+                    />
+                    <ReviewsModal
+                        reviewsModalVisiblity={this.state.reviewsModalVisiblity}
+                        movieTitle={this.props.movie.title}
+                        reviews={this.props.reviews}
+                        toggleReviewsModal={this.toggleReviewsModal}
+                    />
                 </Card>
             )
         );
@@ -225,6 +312,18 @@ class movieCard extends Component {
         classes += this.state.hasDescription ? "d-none" : "d-inline";
         return classes;
     }
+
+    toggleMovieDetailsModal = () => {
+        this.setState({
+            movieDetailsModalVisiblity: !this.state.movieDetailsModalVisiblity
+        });
+    };
+
+    toggleReviewsModal = () => {
+        this.setState({
+            reviewsModalVisiblity: !this.state.reviewsModalVisiblity
+        });
+    };
 }
 
 export default movieCard;
