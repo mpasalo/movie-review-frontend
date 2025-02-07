@@ -13,9 +13,30 @@ code {
 }
 
 .site-layout-content {
-    background: #fff;
     padding: 24px;
 }
+
+.custom-card {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    opacity: 1;
+}
+
+.card-container div:hover .custom-card{
+    transform: scale(1.1); 
+    opacity: 0.8;
+}
+
+.card-container {
+    overflow: hidden;
+}
+.card-container div:hover .blue-overlay {
+    opacity: 1 !important; /* Make the blue overlay visible */
+}
+
+.card-container div:hover .hover-button {
+    opacity: 0.8 !important; 
+}
+
 .logo {
     width: 120px;
     height: 31px;
@@ -23,6 +44,7 @@ code {
     margin: 16px 24px 16px 0;
     float: left;
 }
+
 [data-theme="dark"] .site-layout-content {
     background: #141414;
 }
