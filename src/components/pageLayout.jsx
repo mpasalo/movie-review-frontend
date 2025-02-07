@@ -129,11 +129,7 @@ class pageLayout extends Component {
         return (
             <Layout className="layout" 
                 style={{
-                    backgroundImage: "url('/curtain.jpg')",
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    minHeight: "100vh"
+                    backgroundColor: '#000000'
                 }}
             >
                 <Header className="fixed-top">
@@ -282,6 +278,7 @@ class pageLayout extends Component {
                                     <MovieCard
                                         key={movie.id}
                                         movie={movie}
+                                        reviews={movie.reviews}
                                         auth={this.state.isAuthenticated}
                                         showAuthModal={this.showAuthModal}
                                         userId={this.state.user.id}
