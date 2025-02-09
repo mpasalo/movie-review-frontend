@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import "../index.css";
-import { Layout, Menu, Button, Modal, Dropdown, Spin } from "antd";
+import { Layout, Menu, Button, Modal, Spin } from "antd";
 import MovieCard from "./movieCard";
 import { getMovies } from "../MovieFunctions";
 import { getUser, logOut } from "../UserFunctions";
@@ -14,8 +14,6 @@ import {
     UserAddOutlined,
     SortAscendingOutlined,
     SortDescendingOutlined,
-    FilterOutlined,
-    DownOutlined,
     UndoOutlined,
     LoadingOutlined,
 } from "@ant-design/icons";
@@ -73,18 +71,18 @@ class pageLayout extends Component {
         localStorage.clear();
     };
 
-    filterMoviesByReview = () => {
-        let filteredMovies = this.state.movies.filter(
-            (movie) =>
-                movie.review &&
-                (movie.review.rating !== 0 || movie.review.description !== null)
-        );
+    // filterMoviesByReview = () => {
+    //     let filteredMovies = this.state.movies.filter(
+    //         (movie) =>
+    //             movie.review &&
+    //             (movie.review.rating !== 0 || movie.review.description !== null)
+    //     );
 
-        this.setState({
-            movies: [...filteredMovies],
-            filtered: true,
-        });
-    };
+    //     this.setState({
+    //         movies: [...filteredMovies],
+    //         filtered: true,
+    //     });
+    // };
 
     authenticate = (token) => {
         this.setState({
@@ -118,13 +116,13 @@ class pageLayout extends Component {
     }
 
     render() {
-        const menu = (
-            <Menu>
-                <Menu.Item key="1" onClick={() => this.filterMoviesByReview()}>
-                    With Reviews
-                </Menu.Item>
-            </Menu>
-        );
+        // const menu = (
+        //     <Menu>
+        //         <Menu.Item key="1" onClick={() => this.filterMoviesByReview()}>
+        //             With Reviews
+        //         </Menu.Item>
+        //     </Menu>
+        // );
 
         return (
             <Layout className="layout" 
@@ -240,15 +238,16 @@ class pageLayout extends Component {
                                     onClick={() => this.getAllMovies()}
                                 ></Button>
                             ) : (
-                                <Dropdown overlay={menu}>
-                                    <Button
-                                        type={"primary"}
-                                        size={"large"}
-                                        icon={<FilterOutlined />}
-                                    >
-                                        <DownOutlined />
-                                    </Button>
-                                </Dropdown>
+                                ''
+                                // <Dropdown overlay={menu}>
+                                //     <Button
+                                //         type={"primary"}
+                                //         size={"large"}
+                                //         icon={<FilterOutlined />}
+                                //     >
+                                //         <DownOutlined />
+                                //     </Button>
+                                // </Dropdown>
                             )
                         ) : null}
                         <Button
