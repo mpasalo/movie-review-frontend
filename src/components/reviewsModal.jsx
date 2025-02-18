@@ -28,7 +28,7 @@ class reviewsModal extends Component {
                             value={review.rating}
                             defaultValue={0}
                         />
-                        { '"'+ review.description ? review.description : '' + '"' }
+                        { review.description ? '"' + review.description + '"' : <i>No review description added</i> }
                         <Divider />
                     </li>
                   
