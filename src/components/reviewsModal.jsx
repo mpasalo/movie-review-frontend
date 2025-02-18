@@ -23,11 +23,12 @@ class reviewsModal extends Component {
                         }) } <br/>
                         <Rate
                             disabled
+                            style={{ marginRight: '10px' }}
                             name="rating"
                             value={review.rating}
                             defaultValue={0}
                         />
-                        { ' "'+ review.description + '"' }
+                        { '"'+ review.description ? review.description : '' + '"' }
                         <Divider />
                     </li>
                   
